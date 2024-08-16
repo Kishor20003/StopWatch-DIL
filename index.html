@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stop Clock</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="stopclock">
+        <div class="contents">
+
+            <div class="heading">
+                <h1>Stop Clock</h1>
+            </div>
+<div class="outline">
+            <div class="timer">
+                <h1>00 : 00 : 00</h1>
+            </div>
+
+            <div class="classify">
+                <p>Hours</p>
+                <p>Minutes</p>
+                <p>Seconds</p>
+            </div>
+
+            <button id="stopTimer">Stop</button>
+            <button id="startTimer">Start</button>
+            <button id="resetTimer">Reset</button>
+        </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Variables to keep track of time
+let hours = 0, minutes = 0, seconds = 0;
+let timer;
+
+// Function to update the timer display
+function updateDisplay() {
+    const display = document.querySelector('.timer h1');
+    display.textContent = 
+        `${String(hours).padStart(2, '0')} : ${String(minutes).padStart(2, '0')} : ${String(seconds).padStart(2, '0')}`;
+}
+
+// Function to start the timer
+function startTimer() {
+    if (!timer) {
+        timer = setInterval(() => {
+            seconds++;
+            if (seconds === 60) {
+                seconds = 0;
+                minutes++;
+                if (minutes === 60) {
+                    minutes = 0;
+                    hours++;
+                }
+            }
+            updateDisplay();
+        }, 1000);
+    }
+}
+
+// Function to stop the timer
+function stopTimer() {
+    clearInterval(timer);
+    timer = null;
+}
+
+// Function to reset the timer
+function resetTimer() {
+    stopTimer();
+    hours = 0;
+    minutes = 0;
+    seconds = 0;
+    updateDisplay();
+}
+
+// Event listeners for buttons
+document.querySelectorAll('button').forEach((button) => {
+    button.addEventListener('click', () => {
+        if (button.textContent === 'Start') {
+            startTimer();
+        } else if (button.textContent === 'Stop') {
+            stopTimer();
+        } else if (button.textContent === 'Reset') {
+            resetTimer();
+        }
+    });
+});
+
+// Initialize display on page load
+updateDisplay();
+
+    </script>
+
+</body>
+
+</html>
+
